@@ -13,5 +13,5 @@ app.use('/user', userRoutes);
 app.use('/todo', todoRoutes);
 //  start writing your routes here
 
-app.listen(port, ()=> console.log(`server is running at http://localhost:${port}`));
+app.listen(port, () => console.log(`server is running at http://localhost:${port}`));
 
