@@ -22,6 +22,7 @@ router.delete('/:id', adminMiddleware, (req, res) => {
 
 router.get('/', adminMiddleware, (req, res) => {
     // Implement fetching all todo logic
+    res.send({ message: 'valid' })
 });
 
 router.get('/:id', adminMiddleware, (req, res) => {

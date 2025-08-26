@@ -1,10 +1,9 @@
 const mongoose = require('mongoose');
-const dotenv = require("dotenv");
+const { DB_URI } = require("../constant")
 
-dotenv.config();
 
 // Connect to MongoDB
-mongoose.connect(process.env.DB_URI);
+mongoose.connect(DB_URI);
 
 // Define schemas
 
