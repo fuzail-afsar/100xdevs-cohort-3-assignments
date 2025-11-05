@@ -3,12 +3,13 @@ const bcrypt = require("bcrypt");
 const jwt = require('jsonwebtoken');
 const userMiddleware = require("../middleware/user");
 const { User } = require("../database")
-const { SALT_ROUNDS, JWT_SECRET } = require("../constant")
+const { SALT_ROUNDS, JWT_SECRET } = require("../constant");
+const { validate, signupSchema, signinSchema } = require("../lib/zod");
 
 const router = Router();
 
 // User Routes
-router.post('/signup', async (req, res) => {
+router.post('/signup', validate(signupSchema), async (req, res) => {
     try {
         const { body } = req;
         const { email, password, firstName, lastName } = body;
@@ -28,7 +29,7 @@ router.post('/signup', async (req, res) => {
     }
 });
 
-router.post('/login', async (req, res) => {
+router.post('/login', validate(signinSchema), async (req, res) => {
     try {
         const { body } = req;
         const { email, password } = body;
