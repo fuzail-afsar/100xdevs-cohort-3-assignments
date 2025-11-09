@@ -10,7 +10,7 @@ const {
 
 module.exports = {
     PORT,
-    SALT_ROUNDS,
+    SALT_ROUNDS: Number(SALT_ROUNDS),
     DB_URI,
     JWT_SECRET
 }

@@ -1,15 +1,4 @@
-const z = require('zod')
-
-const validate = (schema) => (req, res, next) => {
-    try {
-        req.body = schema.parse(req.body);
-        next();
-    } catch (err) {
-        return res.status(400).json({
-            error: JSON.parse(err)
-        });
-    }
-};
+const { z } = require('./index')
 
 const passwordValidator = (val) => {
     const passwordRegex =
@@ -35,8 +24,33 @@ const signinSchema = z.object({
     )
 });
 
+const createTodoSchema = z.object({
+    title: z.string().min(1).max(100),
+    description: z.string().optional(),
+    isCompleted: z.boolean().optional()
+});
+
+const updateTodoSchema = z.object({
+    title: z.string().min(1).max(100).optional(),
+    description: z.string().optional(),
+    isCompleted: z.boolean().optional()
+}).refine((obj) => {
+    // Iterate over the values of the object
+    for (const val of Object.values(obj)) {
+        // If any value is not undefined, then at least one field is present
+        if (val !== undefined) {
+            return true;
+        }
+    }
+    // If no non-undefined values are found, the validation fails
+    return false;
+}, {
+    message: "At least one field must be provided."
+});
+
 module.exports = {
-    validate,
     signupSchema,
-    signinSchema
-};
+    signinSchema,
+    createTodoSchema,
+    updateTodoSchema,
+}

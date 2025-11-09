@@ -4,7 +4,8 @@ const jwt = require('jsonwebtoken');
 const userMiddleware = require("../middleware/user");
 const { User } = require("../database")
 const { SALT_ROUNDS, JWT_SECRET } = require("../constant");
-const { validate, signupSchema, signinSchema } = require("../lib/zod");
+const { validate } = require("../lib/zod");
+const { signupSchema, signinSchema } = require("../lib/zod/schema");
 
 const router = Router();
 
@@ -22,7 +23,7 @@ router.post('/signup', validate(signupSchema), async (req, res) => {
             lastName
         });
 
-        res.json({ message: "User created successfully!" });
+        res.status(204).json({ message: "User created successfully!" });
     } catch (error) {
         console.error(error);
         res.status(400).json({ error: error.message });
