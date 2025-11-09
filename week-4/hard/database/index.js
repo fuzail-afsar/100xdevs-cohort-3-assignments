@@ -14,9 +14,19 @@ const UserSchema = new mongoose.Schema({
     lastName: { type: String, required: true }
 });
 
-const TodoSchema = new mongoose.Schema({
-    // Schema definition here
-});
+const TodoSchema = new mongoose.Schema(
+    {
+        user: {
+            type: mongoose.Schema.Types.ObjectId,
+            required: true,
+            ref: 'User'
+        },
+        title: { type: String, required: true },
+        description: { type: String },
+        isCompleted: { type: Boolean }
+    },
+    { timestamps: true }
+);
 
 const User = mongoose.model('User', UserSchema);
 const Todo = mongoose.model('Todo', TodoSchema);
